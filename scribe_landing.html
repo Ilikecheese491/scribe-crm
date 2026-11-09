@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scribe - CRM That Runs Itself | Auto-capture, Auto-follow-up, Auto-update</title>
+    <meta name="description" content="Stop babysitting your CRM. Scribe auto-captures every interaction, handles follow-ups with AI, and keeps your records updated — all without manual data entry. Start free trial.">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css">
+    <script>
+// Inlined trial.js — API_URL set at deploy
+// Scribe CRM tracking snippet — Lens taxonomy
+// Replace API_URL with Render service URL, e.g. https://scribe.onrender.com
+const API_URL = "https://scribe.onrender.com";
+const PUBLIC_KEY = "__REPLACE_PUBLIC_KEY__"; // optional
+
+function uid(){ return Math.random().toString(36).slice(2)+Date.now().toString(36); }
+function getKV(name, setIfMissing){
+  const v = localStorage.getItem(name);
+  if(v) return v;
+  const nv = setIfMissing();
+  localStorage.setItem(name, nv);
+  return nv;
+}
+const session_id = getKV("scribe_session", () => uid());
+const device_id = getKV("scribe_device", () => uid());
+
+function parseUTM(){
+  const p = new URLSearchParams(location.search);
+  return {
+    utm_source: p.get("utm_source")||"",
+    utm_medium: p.get("utm_medium")||"",
+    utm_campaign: p.get("utm_campaign")||""
+  };
+}
+function post(event, extra={}){
+  const body = {
+    event_id: uid(),
+    session_id,
+    ts: Math.floor(Date.now()/1000),
+    device: device_id,
+    key: PUBLIC_KEY,
+    product: "scribe",
+    ...parseUTM(),
+    ...extra
+  };
+  navigator.sendBeacon ? navigator.sendBeacon(API_URL+"/track", new Blob([JSON.stringify(body)],{type:"application/json"}))
+  : fetch(API_URL+"/track", {method:"POST",body:JSON.stringify(body),headers:{"Content-Type":"application/json"},keepalive:true});
+}
+// session start on page load
+post("session_start");
+
+// CTA click helper
+window.scribeTrack = (label, event_name) => post("cta_click", {channel:"web", event: event_name || label, cta_label: label});
+
+// Demo view helper
+window.scribeViewDemo = (demo_type) => post("demo_view", {demo_type});
+
+// Trial start helper
+window.scribeStartTrial = (email, businessSize) => post("trial_start", {email, business_size: businessSize});
+
+// Activation helper — one per trial, client guards
+let activated = localStorage.getItem("scribe_activated");
+window.scribeActivate = (method) => {
+  if(activated) return;
+  post("activation", {method});
+  localStorage.setItem("scribe_activated","1");
+};
+
+</script>
+</head>
+<body class="bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 font-sans antialiased">
+    
+    <!-- Hero Section -->
+    <section class="min-h-screen flex flex-col items-center justify-center px-4 py-20">
+        <div class="max-w-4xl text-center mb-12">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+                CRM That Runs Itself
+            </h1>
+            <p class="text-xl md:text-2xl text-zinc-600 dark:text-zinc-300 mb-8 max-w-3xl mx-auto">
+                Auto-captures every interaction. Handles follow-ups with AI. Keeps records updated — all without manual data entry.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+                <button onclick="scribeTrack('hero_primary', 'signup_click')" id="signupBtn" class="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-lg transition-colors">
+                    Start Free Trial
+                </button>
+                <button onclick="scribeTrack('hero_secondary', 'demo_click')" class="px-8 py-4 border border-zinc-300 dark:border-zinc-600 rounded-lg font-semibold hover:bg-zinc-50 dark:hover:bg-zinc-800">
+                    Watch Demo
+                </button>
+            </div>
+            <div class="text-sm text-zinc-500 dark:text-zinc-400">
+                No credit card required • Set up in 2 minutes • Cancel anytime
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="py-20 px-4 bg-zinc-50 dark:bg-zinc-800">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    Why 70% of SMB CRM Projects Fail
+                </h2>
+                <p class="text-lg text-zinc-600 dark:text-zinc-300 max-w-2xl mx-auto">
+                    It's not you. It's the product.
+                </p>
+            </div>
+            
+            <div class="space-y-8">
+                <div class="bg-white dark:bg-zinc-900 p-6 md:p-8 rounded-xl shadow-sm border border-zinc-200 dark:border-zinc-700">
+                    <h3 class="text-2xl font-semibold mb-3">Too Complicated</h3>
+                    <p class="text-zinc-600 dark:text-zinc-300 mb-4">55% of CRM projects fail expectations because existing solutions are too complex for SMBs.</p>
+                    <ul class="space-y-2 text-zinc-500 dark:text-zinc-400">
+                        <li>• 8+ hours per week spent on manual data entry</li>
+                        <li>• 3+ tools needed to make it work properly</li>
+                        <li>• Training staff takes weeks</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white dark:bg-zinc-900 p-6 md:p-8 rounded-xl shadow-sm border border-zinc-200 dark:border-zinc-700">
+                    <h3 class="text-2xl font-semibold mb-3">Manual Work Never Ends</h3>
+                    <p class="text-zinc-600 dark:text-zinc-300 mb-4">32% lack the technical expertise to set up automation flows properly.</p>
+                    <ul class="space-y-2 text-zinc-500 dark:text-zinc-400">
+                        <li>• Follow-ups that get forgotten</li>
+                        <li>• Deals that slip through cracks</li>
+                        <li>• No integration between tools</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white dark:bg-zinc-900 p-6 md:p-8 rounded-xl shadow-sm border border-zinc-200 dark:border-zinc-700">
+                    <h3 class="text-2xl font-semibold mb-3">Unused Features</h3>
+                    <p class="text-zinc-600 dark:text-zinc-300 mb-4">43% of SMBs pay for 50+ features but only use 30% of them.</p>
+                    <ul class="space-y-2 text-zinc-500 dark:text-zinc-400">
+                        <li>• $200+ wasted monthly on unused licenses</li>
+                        <li>• Features you don't need and can't configure</li>
+                        <li>• Complexity for complexity's sake</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Reality Section -->
+    <section class="py-20 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8">The Market Reality</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-zinc-50 dark:bg-zinc-800 p-6 rounded-xl">
+                    <div class="text-4xl font-bold text-blue-600 mb-2">$86B</div>
+                    <div class="text-zinc-600 dark:text-zinc-300">CRM Market (2026)</div>
+                </div>
+                <div class="bg-zinc-50 dark:bg-zinc-800 p-6 rounded-xl">
+                    <div class="text-4xl font-bold text-blue-600 mb-2">91%</div>
+                    <div class="text-zinc-600 dark:text-zinc-300">Already Using a CRM</div>
+                </div>
+                <div class="bg-zinc-50 dark:bg-zinc-800 p-6 rounded-xl">
+                    <div class="text-4xl font-bold text-blue-600 mb-2">37%</div>
+                    <div class="text-zinc-600 dark:text-zinc-300">Actually Happy</div>
+                </div>
+            </div>
+            <p class="mt-8 text-lg text-zinc-600 dark:text-zinc-300 max-w-2xl mx-auto">
+                The gap isn't demand — it's that existing solutions don't actually run themselves.
+            </p>
+        </div>
+    </section>
+
+    <!-- How Scribe Works Section -->
+    <section class="py-20 px-4 bg-zinc-50 dark:bg-zinc-800">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    How Scribe Works
+                </h2>
+                <p class="text-lg text-zinc-600 dark:text-zinc-300 max-w-2xl mx-auto">
+                    Your CRM that writes the records itself
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-2">Auto-capture every interaction</h3>
+                        <p class="text-zinc-600 dark:text-zinc-300">Emails, calls, form submissions all sync automatically — no manual entry.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-2">AI handles follow-ups</h3>
+                        <p class="text-zinc-600 dark:text-zinc-300">Sends the right messages at the right time — you never miss a prospect.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-2">Real-time updates</h3>
+                        <p class="text-zinc-600 dark:text-zinc-300">Know when you called, when you promised to follow up, and what's next.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-2">Predicts next actions</h3>
+                        <p class="text-zinc-600 dark:text-zinc-300">Knows what to do next without manual pipeline management.</p>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-zinc-900 rounded-xl p-8 shadow-lg border border-zinc-200 dark:border-zinc-700 text-center">
+                    <div class="text-6xl font-bold text-blue-600 mb-4">55-70%</div>
+                    <p class="text-zinc-600 dark:text-zinc-300">of CRM projects fail to meet expectations</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 px-4">
+        <div class="max-w-2xl mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Stop Babysitting Your CRM?</h2>
+            <p class="text-lg text-zinc-600 dark:text-zinc-300 mb-8">
+                The CRM that runs itself — so your team doesn't have to.
+            </p>
+            <button onclick="scribeTrack('footer_cta', 'signup')" id="finalSignupBtn" class="px-12 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-lg transition-colors text-lg">
+                Start Free Trial
+            </button>
+            <p class="mt-4 text-sm text-zinc-500 dark:text-zinc-400">
+                No credit card required • Start in 2 minutes • Cancel anytime
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-4 border-t border-zinc-200 dark:border-zinc-700">
+        <div class="max-w-4xl mx-auto text-center text-zinc-500 dark:text-zinc-400">
+            <p>&copy; 2026 Scribe CRM. The CRM that runs itself.</p>
+            <div class="mt-4 space-x-4">
+                <a href="#" class="hover:text-zinc-900 dark:hover:text-zinc-100">Privacy</a>
+                <a href="#" class="hover:text-zinc-900 dark:hover:text-zinc-100">Terms</a>
+                <a href="#" class="hover:text-zinc-900 dark:hover:text-zinc-100">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('signupBtn').addEventListener('click', function() {
+            scribeTrack('hero_primary', 'signup_click');
+            window.location.href = '/signup.html';
+        });
+        
+        document.getElementById('finalSignupBtn').addEventListener('click', function() {
+            scribeTrack('footer_cta', 'signup_click');
+            window.location.href = '/signup.html';
+        });
+    </script>
+</body>
+</html>
