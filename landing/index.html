@@ -6,67 +6,7 @@
     <title>Scribe - CRM That Runs Itself | Auto-capture, Auto-follow-up, Auto-update</title>
     <meta name="description" content="Stop babysitting your CRM. Scribe auto-captures every interaction, handles follow-ups with AI, and keeps your records updated — all without manual data entry. Start free trial.">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css">
-    <script>
-// Inlined trial.js — API_URL set at deploy
-// Scribe CRM tracking snippet — Lens taxonomy
-// Replace API_URL with Render service URL, e.g. https://scribe.onrender.com
-const API_URL = "https://scribe.onrender.com";
-const PUBLIC_KEY = "__REPLACE_PUBLIC_KEY__"; // optional
-
-function uid(){ return Math.random().toString(36).slice(2)+Date.now().toString(36); }
-function getKV(name, setIfMissing){
-  const v = localStorage.getItem(name);
-  if(v) return v;
-  const nv = setIfMissing();
-  localStorage.setItem(name, nv);
-  return nv;
-}
-const session_id = getKV("scribe_session", () => uid());
-const device_id = getKV("scribe_device", () => uid());
-
-function parseUTM(){
-  const p = new URLSearchParams(location.search);
-  return {
-    utm_source: p.get("utm_source")||"",
-    utm_medium: p.get("utm_medium")||"",
-    utm_campaign: p.get("utm_campaign")||""
-  };
-}
-function post(event, extra={}){
-  const body = {
-    event_id: uid(),
-    session_id,
-    ts: Math.floor(Date.now()/1000),
-    device: device_id,
-    key: PUBLIC_KEY,
-    product: "scribe",
-    ...parseUTM(),
-    ...extra
-  };
-  navigator.sendBeacon ? navigator.sendBeacon(API_URL+"/track", new Blob([JSON.stringify(body)],{type:"application/json"}))
-  : fetch(API_URL+"/track", {method:"POST",body:JSON.stringify(body),headers:{"Content-Type":"application/json"},keepalive:true});
-}
-// session start on page load
-post("session_start");
-
-// CTA click helper
-window.scribeTrack = (label, event_name) => post("cta_click", {channel:"web", event: event_name || label, cta_label: label});
-
-// Demo view helper
-window.scribeViewDemo = (demo_type) => post("demo_view", {demo_type});
-
-// Trial start helper
-window.scribeStartTrial = (email, businessSize) => post("trial_start", {email, business_size: businessSize});
-
-// Activation helper — one per trial, client guards
-let activated = localStorage.getItem("scribe_activated");
-window.scribeActivate = (method) => {
-  if(activated) return;
-  post("activation", {method});
-  localStorage.setItem("scribe_activated","1");
-};
-
-</script>
+    <script src="trial.js"></script>
 </head>
 <body class="bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 font-sans antialiased">
     
@@ -80,7 +20,7 @@ window.scribeActivate = (method) => {
                 Auto-captures every interaction. Handles follow-ups with AI. Keeps records updated — all without manual data entry.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-                <button onclick="scribeTrack('hero_primary', 'signup_click')" id="signupBtn" class="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-lg transition-colors">
+                <button id="signupBtn" class="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-lg transition-colors">
                     Start Free Trial
                 </button>
                 <button onclick="scribeTrack('hero_secondary', 'demo_click')" class="px-8 py-4 border border-zinc-300 dark:border-zinc-600 rounded-lg font-semibold hover:bg-zinc-50 dark:hover:bg-zinc-800">
@@ -209,7 +149,7 @@ window.scribeActivate = (method) => {
             <p class="text-lg text-zinc-600 dark:text-zinc-300 mb-8">
                 The CRM that runs itself — so your team doesn't have to.
             </p>
-            <button onclick="scribeTrack('footer_cta', 'signup')" id="finalSignupBtn" class="px-12 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-lg transition-colors text-lg">
+            <button id="finalSignupBtn" class="px-12 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-lg transition-colors text-lg">
                 Start Free Trial
             </button>
             <p class="mt-4 text-sm text-zinc-500 dark:text-zinc-400">

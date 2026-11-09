@@ -1,4 +1,0 @@
-[build]
-  publish = "landing"
-[context.production]
-  command = "echo 'Static site ready'"

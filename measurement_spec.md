@@ -88,7 +88,7 @@ WHERE (a.ts - t.ts) BETWEEN 0 AND 72*3600
 |----------|--------|------|-------------|---------|
 | `POST /track` | JSON | `TRACK_PUBLIC_KEY` (optional) | Lin's scaffold | Ingest all events |
 | `GET /health` | N/A | N/A | Lin's scaffold | Liveness probe |
-| `GET /summary` | N/A | `Bearer «redacted 14 chars»` | Lin's scaffold | Dashboard: trials, qualified, rate, avg_hours |
+| `GET /summary` | N/A | `Bearer SUMMARY_SECRET` | Lin's scaffold | Dashboard: trials, qualified, rate, avg_hours |
 
 **Wire checklist (per test-plan.md launch gate):**
 - [ ] Frontend Engineer: inject `trial.js` in landing hero, CTA, sign-up (replace `API_URL`, `PUBLIC_KEY`)

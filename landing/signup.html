@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Free Trial - Scribe CRM</title>
+    <meta name="description" content="Start your free 14-day trial of Scribe CRM — the CRM that runs itself. Auto-captures interactions, handles follow-ups with AI, and keeps records updated.">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css">
+    <script src="trial.js"></script>
+</head>
+<body class="bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 font-sans antialiased">
+    
+    <section class="min-h-screen flex flex-col items-center justify-center px-4 py-20">
+        <div class="max-w-2xl w-full">
+            <div class="text-center mb-12">
+                <h1 class="text-3xl md:text-4xl font-bold mb-4">
+                    Start Your Free Trial
+                </h1>
+                <p class="text-lg text-zinc-600 dark:text-zinc-300">
+                    14 days free • No credit card required • Cancel anytime
+                </p>
+            </div>
+            
+            <div class="bg-white dark:bg-zinc-900 rounded-xl shadow-lg border border-zinc-200 dark:border-zinc-700 p-6 md:p-8">
+                <form id="signupForm" class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-sm font-semibold mb-2">Full Name</label>
+                        <input type="text" id="name" name="name" required class="w-full px-4 py-3 border border-zinc-300 dark:border-zinc-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white dark:bg-zinc-800">
+                    </div>
+                    
+                    <div>
+                        <label for="email" class="block text-sm font-semibold mb-2">Work Email</label>
+                        <input type="email" id="email" name="email" required class="w-full px-4 py-3 border border-zinc-300 dark:border-zinc-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white dark:bg-zinc-800">
+                    </div>
+                    
+                    <div>
+                        <label for="company" class="block text-sm font-semibold mb-2">Company Name</label>
+                        <input type="text" id="company" name="company" required class="w-full px-4 py-3 border border-zinc-300 dark:border-zinc-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white dark:bg-zinc-800">
+                    </div>
+                    
+                    <div>
+                        <label for="phone" class="block text-sm font-semibold mb-2">Phone (Optional)</label>
+                        <input type="tel" id="phone" name="phone" class="w-full px-4 py-3 border border-zinc-300 dark:border-zinc-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white dark:bg-zinc-800">
+                    </div>
+                    
+                    <div>
+                        <label for="teamSize" class="block text-sm font-semibold mb-2">Team Size</label>
+                        <select id="teamSize" name="teamSize" required class="w-full px-4 py-3 border border-zinc-300 dark:border-zinc-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white dark:bg-zinc-800">
+                            <option value="">Select team size</option>
+                            <option value="1-5">1-5 people</option>
+                            <option value="6-10">6-10 people</option>
+                            <option value="11-25">11-25 people</option>
+                            <option value="26-50">26-50 people</option>
+                            <option value="50+">50+ people</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors">
+                        Start Free Trial
+                    </button>
+                </form>
+                
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-zinc-500 dark:text-zinc-400">
+                        By signing up, you agree to our <a href="#" class="text-blue-600 hover:underline">Terms</a> and <a href="#" class="text-blue-600 hover:underline">Privacy Policy</a>
+                    </p>
+                </div>
+            </div>
+            
+            <div class="mt-8 text-center">
+                <p class="text-sm text-zinc-500 dark:text-zinc-400">Already have an account? <a href="#" class="text-blue-600 hover:underline">Sign in</a></p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const businessSize = document.getElementById('teamSize').value;
+            
+            // Fire trial_start event
+            scribeStartTrial(email, businessSize);
+            
+            // Fire activation event — signup = qualified trial start
+            scribeActivate('signup');
+            
+            // Show success state
+            document.getElementById('signupForm').innerHTML =
+                '<div class="text-center py-8"><div class="text-4xl mb-4">✅</div>' +
+                '<h2 class="text-2xl font-bold mb-2">Welcome to Scribe!</h2>' +
+                '<p class="text-zinc-600 dark:text-zinc-300">Check your email to complete setup.</p></div>';
+        });
+    </script>
+</body>
+</html>

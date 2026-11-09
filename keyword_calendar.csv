@@ -1,0 +1,36 @@
+keyword,monthly_search_volume,search_intent,funnel_stage,target_page,priority,difficulty_estimate,current_top_3_domains
+crm for small business,8100,commercial,MOFU,/blog/crm-for-small-business,high,3,forbes.com;capaterra.com;pcmag.com
+best crm for small business,4400,commercial,MOFU,/blog/best-crm-for-small-business,high,4,forbes.com;pcmag.com;capterra.com
+free crm for small business,3200,transactional,BOFU,/pricing,high,2,hubspot.com;zoho.com;monday.com
+crm that runs itself,1200,informational,TOFU,/blog/crm-that-runs-itself,high,1,yoursitefirst.com (none);none;none
+ai crm for small business,800,commercial,MOFU,/blog/ai-crm-for-small-business,high,3,yoursitefirst.com (none);none;none
+automate sales follow up small business,600,informational,TOFU,/blog/automate-sales-follow-up,high,2,yoursitefirst.com (none);monday.com;hubspot.com
+hubspot vs zoho crm,900,commercial,BOFU,/compare/hubspot-vs-zoho,high,3,yourtechread.com;layer3labs.io;forbes.com
+hubspot vs zoho,750,commercial,BOFU,/compare/hubspot-vs-zoho,high,3,decisoncircuit.com;toprankedcrm.com;forbes.com
+zoho vs hubspot for small business,650,commercial,BOFU,/compare/zoho-vs-hubspot,high,3,layer3labs.io;yoursitefirst.com;yoursitefirst.com
+scribe vs hubspot,50,informational,BOFU,/compare/scribe-vs-hubspot,high,2,yoursitefirst.com;none;none
+scribe vs zoho,45,informational,BOFU,/compare/scribe-vs-zoho,high,2,yoursitefirst.com;none;none
+scribe vs pipedrive,40,informational,BOFU,/compare/scribe-vs-pipedrive,high,2,yoursitefirst.com;none;none
+crms for real estate small business,1800,commercial,MOFU,/blog/crm-for-real-estate,medium,3,hubspot.com;zoho.com;pipedrive.com
+crm for dental practices,900,commercial,MOFU,/blog/crm-for-dental,medium,3,zoho.com;hubspot.com;closed.com
+crm for contractors,1100,commercial,MOFU,/blog/crm-for-contractors,medium,3,pipedrive.com;zoho.com;hubspot.com
+crm for agencies,1300,commercial,MOFU,/blog/crm-for-agencies,medium,3,hubspot.com;zoho.com;monday.com
+crm for small retail,700,commercial,MOFU,/blog/crm-for-retail,medium,3,zoho.com;hubspot.com;shopify.com
+crm with email automation,3500,commercial,consideration,/features/email-automation,high,4,hubspot.com;zoho.com;active_campaign.com
+crm with ai automation,2200,commercial,MOFU,/blog/ai-crm,high,4,hubspot.com;zoho.com;agptools.io
+crm with lead scoring,1800,commercial,MOFU,/features/lead-scoring,high,3,hubspot.com;zoho.com;salesforce.com
+best crm with automation small business,900,commercial,MOFU,/blog/best-crm-automation,high,3,yoursitefirst.com;hubspot.com;zoho.com
+small business crm pricing,2100,transactional,BOFU,/pricing,high,3,hubspot.com;zoho.com;pipedrive.com
+hubspot free alternative,1400,transactional,BOFU,/pricing,high,2,zoho.com;bigin.zoho.com;freshsales.io
+best free crm for small business 2026,850,transactional,BOFU,/pricing,high,2,zoho.com;hubspot.com;bigin.zoho.com
+small business crm cost comparison,600,commercial,consideration,/blog/crm-cost-comparison,medium,3,zoho.com;hubspot.com;pipedrive.com
+crm setup time comparison,450,commercial,consideration,/features/setup,medium,2,yoursitefirst.com;hubspot.com;zoho.com
+crm that requires no technical expertise,300,informational,TOFU,/blog/crm-no-tech-expertise,high,1,yoursitefirst.com;none;none
+crm automation for non-technical teams,380,informational,TOFU,/blog/automation-nontechnical,high,2,yoursitefirst.com;hubspot.com;zoho.com
+multi-user crm small business pricing,520,commercial,consideration,/pricing,medium,3,zoho.com;hubspot.com;pipedrive.com
+crm features vs ease of use,700,commercial,consideration,/blog/features-ease-of-use,medium,3,hubspot.com;zoho.com;monday.com
+best crm for sales team automation,850,commercial,MOFU,/blog/crm-sales-automation,high,4,hubspot.com;zoho.com;close.com
+small business crm implementation failure,200,informational,TOFU,/blog/crm-failure-rate,high,1,yoursitefirst.com;customerthink.com;gartner.com
+free crm for 3 users,950,transactional,BOFU,/pricing,high,2,zoho.com;hubspot.com;bigin.zoho.com
+crm that learns your business,150,informational,TOFU,/blog/crm-that-learns,high,1,yoursitefirst.com;none;none
+automated lead management crm,1100,commercial,MOFU,/features/lead-management,high,4,zoho.com;hubspot.com;salesloft.com
