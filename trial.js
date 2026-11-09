@@ -1,6 +1,6 @@
 // Scribe CRM tracking snippet — Lens taxonomy
 // API_URL is set at deploy time; defaults to localhost for local testing
-const API_URL = "http://localhost:8000";
+const API_URL = "https://scribe-dot.onrender.com";
 const PUBLIC_KEY = ""; // set via env on deploy, client sends empty by default
 
 function uid(){ return Math.random().toString(36).slice(2)+Date.now().toString(36); }
