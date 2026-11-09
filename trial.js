@@ -1,6 +1,6 @@
 // Scribe CRM tracking snippet — Lens taxonomy
-// Replace API_URL with Render service URL, e.g. https://scribe.onrender.com
-const API_URL = "https://scribe.onrender.com";
+// API_URL is set at deploy time; defaults to localhost for local testing
+const API_URL = "http://localhost:8000";
 const PUBLIC_KEY = ""; // set via env on deploy, client sends empty by default
 
 function uid(){ return Math.random().toString(36).slice(2)+Date.now().toString(36); }

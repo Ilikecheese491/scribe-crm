@@ -1,40 +1,34 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><title>Scribe tracking test harness</title></head>
 <body>
-<h1>Tracking test harness</h1>
+<h1>Scribe Tracking Test Harness</h1>
 <p>Open browser console to see responses.</p>
 <script src="trial.js"></script>
 <script>
-  // Uses the same API_URL and functions as trial.js
-  async function test(){
-    console.log("session_id:", localStorage.getItem("scribe_session"));
-    console.log("device_id:", localStorage.getItem("scribe_device"));
-    // session_start fires automatically on page load via trial.js
-    
-    // Test CTA click
-    scribeTrack("test_cta", "cta_click");
-    
-    // Test trial start
-    scribeStartTrial("test@example.com", "11-50");
-    
-    // Test activation
-    scribeActivate("test_activation");
-    
-    console.log("All events fired. Check /summary endpoint for results.");
-    
-    // Fetch summary
-    try {
-      const resp = await fetch("https://scribe.onrender.com/summary");
-      const data = await resp.json();
-      console.log("Summary:", JSON.stringify(data, null, 2));
-    } catch(e) {
-      console.log("Summary fetch failed (expected if API not live yet):", e.message);
-    }
-  }
+async function test(){
+  console.log("session_id:", localStorage.getItem("scribe_session"));
+  console.log("device_id:", localStorage.getItem("scribe_device"));
   
-  // Wait for trial.js to load then run
-  window.addEventListener('load', () => {
-    setTimeout(test, 500);
-  });
+  // Test CTA click
+  scribeTrack("hero_primary", "signup_click");
+  console.log("CTA click fired");
+  
+  // Wait a moment for sendBeacon
+  await new Promise(r => setTimeout(r, 500));
+  
+  // Test trial start
+  scribeStartTrial("test@example.com", "11-50");
+  console.log("Trial start fired");
+  
+  await new Promise(r => setTimeout(r, 500));
+  
+  // Test activation
+  scribeActivate("test");
+  console.log("Activation fired");
+  
+  console.log("All events fired. Check /summary endpoint for results.");
+}
+
+test();
 </script>
 </body></html>
